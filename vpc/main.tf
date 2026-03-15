@@ -90,3 +90,32 @@ resource "aws_vpc_endpoint" "s3" {
   service_name    = "com.amazonaws.eu-west-2.s3"
   route_table_ids = aws_route_table.private.*.id
 }
+
+resource "aws_vpc_endpoint" "sts" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.eu-west-2.sts"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.private.*.id
+  security_group_ids  = [var.endpoint_security_grp_id]
+  private_dns_enabled = true
+}
+
+# ECR API endpoint (for pulling images)
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.eu-west-2.ecr.api"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.private.*.id
+  security_group_ids  = [var.endpoint_security_grp_id]
+  private_dns_enabled = true
+}
+
+# ECR DKR endpoint (for pulling Docker images)
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.eu-west-2.ecr.dkr"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.private.*.id
+  security_group_ids  = [var.endpoint_security_grp_id]
+  private_dns_enabled = true
+}
