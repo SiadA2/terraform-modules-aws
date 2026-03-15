@@ -76,4 +76,10 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
+# DynamoDB Gateway Endpoint (free)
+resource "aws_vpc_endpoint" "dynamodb" {
+  vpc_id       = aws_vpc.main.id
+  service_name = "com.amazonaws.eu-west-2.dynamodb"
+  route_table_ids = aws_route_table.private.*.id
 
+}
