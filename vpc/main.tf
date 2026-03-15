@@ -119,3 +119,13 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
   security_group_ids  = [var.endpoint_security_grp_id]
   private_dns_enabled = true
 }
+
+# CloudWatch Logs endpoint (for sending logs)
+resource "aws_vpc_endpoint" "logs" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.eu-west-2.logs"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = aws_subnet.private.*.id
+  security_group_ids  = [var.endpoint_security_grp_id]
+  private_dns_enabled = true
+}
