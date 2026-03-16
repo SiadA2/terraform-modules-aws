@@ -16,12 +16,39 @@ module "ecs_fargate" {
   source = "./ecs-fargate"
   
   cluster_name = "my-cluster"
-  container_name = "my-app"
-  environment_variables = {
-    DATABASE_URL = "postgres://..."
-    API_KEY      = "secret-key"
-    LOG_LEVEL    = "info"
-  }
-  # ... other variables
+  container_definitions = [
+    {
+      name  = "web-app"
+      image = "nginx:1.21"
+      cpu   = 512
+      memory = 1024
+      essential = true
+      environment = [
+        { name = "ENV", value = "production" },
+        { name = "PORT", value = "8080" }
+      ]
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = "/ecs/my-app"
+          "awslogs-region"        = "us-east-1"
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
+    },
+    {
+      name  = "sidecar"
+      image = "busybox:latest"
+      cpu   = 128
+      memory = 256
+      essential = false
+    }
+  ]
 }
 ```
