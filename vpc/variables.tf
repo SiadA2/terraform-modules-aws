@@ -1,9 +1,11 @@
 variable "vpc_cidr" {
+    type = string
+    description = "CIDR block for the VPC"
 }
 
 variable "availability_zones" {
-  type        = list(string)
-  description = "List of availability zones to create subnets in"
+    type        = list(string)
+    description = "List of availability zones to create subnets in"
 }
 
 variable "public_subnet_cidrs" {
