@@ -17,3 +17,8 @@ variable "private_subnet_cidrs" {
   type        = list(string)
   description = "List of CIDR blocks for private subnets, one per availability zone"
 }
+
+variable "endpoint_security_grp_id" {
+    type        = string
+    description = "Security group ID for VPC endpoints"
+}
