@@ -6,22 +6,22 @@ resource "aws_security_group" "lb" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = var.http_port
-    to_port     = var.http_port
-    cidr_blocks = [var.internet_cidr_block]
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     protocol    = "tcp"
-    from_port   = var.https_port
-    to_port     = var.https_port
-    cidr_blocks = [var.internet_cidr_block]
+    from_port   = 443
+    to_port     = 443
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
     protocol    = "-1"
     from_port   = 0
     to_port     = 0
-    cidr_blocks = [var.internet_cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }

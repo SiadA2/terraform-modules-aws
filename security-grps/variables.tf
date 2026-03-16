@@ -18,17 +18,6 @@ variable "ecs_security_group_desc" {
   default = "allow inbound access from the ALB only"
 }
 
-variable "internet_cidr_block" {
-  type    = string
-  default = "0.0.0.0/0"
-}
-
-variable "http_port" {
-}
-
-variable "https_port" {
-}
-
 variable "vpc_id" {
 }
 
