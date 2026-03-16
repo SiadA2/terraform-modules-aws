@@ -52,3 +52,20 @@ module "ecs_fargate" {
   ]
 }
 ```
+
+```bash
+module "cloudfront" {
+  source = "../cloudfront"
+
+  origin_domain_name        = "my-app-backend.example.com"   # flexible origin
+  origin_id                 = "api-origin"
+  origin_protocol_policy    = "https-only"
+  default_root_object       = "index.html"
+  price_class               = "PriceClass_100"
+  aliases                   = ["www.example.com"]           # optional custom CNAMEs
+  certificate_arn           = "arn:aws:acm:us-east-1:123456789012:certificate/abcd-ef01-2345-6789-abcd1234ef56"
+  logging_bucket            = "cf-access-logs-bucket"
+  comment                   = "CF distribution for example app"
+  enabled                   = true
+}
+```
