@@ -47,3 +47,17 @@ resource "aws_security_group" "ecs_tasks" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# VPC Endpoint security group
+resource "aws_security_group" "vpc_endpoint" {
+  name        = "vpc-endpoint-sg"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.ecs_tasks.id]
+    description     = "HTTPS from ECS tasks"
+  }
+}
