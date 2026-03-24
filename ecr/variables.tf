@@ -1,5 +1,5 @@
 variable "repo_name" {
-  type = string
+  type        = string
   description = "Name of the ECR repository"
-  default = "example-repo"
+  default     = "example-repo"
 }

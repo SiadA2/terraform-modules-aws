@@ -1,25 +1,25 @@
 variable "cluster_name" {
-    description = "name of the ecs cluster"
-    default = "default-cluster"
+  description = "name of the ecs cluster"
+  default     = "default-cluster"
 }
 
 variable "volume_name" {
-    description = "name of the container volume"
-    default = "container-volume"
+  description = "name of the container volume"
+  default     = "container-volume"
 }
 variable "volume_path" {
-    description = "path to the container volume"
-    default = "/ecs/service-storage"
+  description = "path to the container volume"
+  default     = "/ecs/service-storage"
 }
 
 variable "container_definitions" {
   type = list(object({
-    name         = string
-    image        = string
-    cpu          = optional(number, 256)
-    memory       = optional(number, 512)
-    essential    = optional(bool, true)
-    environment  = optional(list(object({
+    name      = string
+    image     = string
+    cpu       = optional(number, 256)
+    memory    = optional(number, 512)
+    essential = optional(bool, true)
+    environment = optional(list(object({
       name  = string
       value = string
     })), [])
@@ -36,10 +36,10 @@ variable "container_definitions" {
   description = "List of container definitions for the ECS task"
   default = [
     {
-      name  = "default-container"
-      image = "nginx:latest"
-      cpu   = 256
-      memory = 512
+      name      = "default-container"
+      image     = "nginx:latest"
+      cpu       = 256
+      memory    = 512
       essential = true
       portMappings = [
         {

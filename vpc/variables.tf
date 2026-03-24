@@ -1,11 +1,11 @@
 variable "vpc_cidr" {
-    type = string
-    description = "CIDR block for the VPC"
+  type        = string
+  description = "CIDR block for the VPC"
 }
 
 variable "availability_zones" {
-    type        = list(string)
-    description = "List of availability zones to create subnets in"
+  type        = list(string)
+  description = "List of availability zones to create subnets in"
 }
 
 variable "public_subnet_cidrs" {
@@ -19,6 +19,6 @@ variable "private_subnet_cidrs" {
 }
 
 variable "endpoint_security_grp_id" {
-    type        = string
-    description = "Security group ID for VPC endpoints"
+  type        = string
+  description = "Security group ID for VPC endpoints"
 }

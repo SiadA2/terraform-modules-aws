@@ -1,4 +1,4 @@
 variable "domain_name" {
-  type = string
+  type        = string
   description = "The domain name for the Route 53 hosted zone"
 }

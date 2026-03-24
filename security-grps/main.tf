@@ -50,8 +50,8 @@ resource "aws_security_group" "ecs_tasks" {
 
 # VPC Endpoint security group
 resource "aws_security_group" "vpc_endpoint" {
-  name        = "vpc-endpoint-sg"
-  vpc_id      = var.vpc_id
+  name   = "vpc-endpoint-sg"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port       = 443

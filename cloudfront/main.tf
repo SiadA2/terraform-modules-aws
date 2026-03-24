@@ -21,11 +21,11 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   default_cache_behavior {
-    target_origin_id = var.origin_id
+    target_origin_id       = var.origin_id
     viewer_protocol_policy = "redirect-to-https"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    compress         = true
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+    compress               = true
 
     cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" # CachingOptimized
     origin_request_policy_id = "216adef6-5c7f-47e4-b989-5492eafa07d3" # AllViewer except cookies
@@ -40,18 +40,18 @@ resource "aws_cloudfront_distribution" "main" {
   dynamic "viewer_certificate" {
     for_each = length(var.aliases) > 0 && var.certificate_arn != "" ? [1] : []
     content {
-      acm_certificate_arn            = var.certificate_arn
-      ssl_support_method             = "sni-only"
-      minimum_protocol_version       = "TLSv1.2_2021"
+      acm_certificate_arn      = var.certificate_arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
     }
   }
 
   dynamic "logging_config" {
     for_each = var.logging_bucket != "" ? [1] : []
     content {
-      bucket         = var.logging_bucket
+      bucket          = var.logging_bucket
       include_cookies = false
-      prefix         = "cloudfront/${var.origin_id}"
+      prefix          = "cloudfront/${var.origin_id}"
     }
   }
 

@@ -1,0 +1,38 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Terraform crash logs
+crash.log
+crash.*.log
+
+# Terraform CLI
+.terraform.d/
+
+# Terragrunt
+.terragrunt-cache/
+
+# TFLint
+.tflint.hcl
+
+# Terratest
+.terraform/
+
+# Infracost
+.infracost/
+
+# Checkov
+.checkov.yaml
+
+# Pre-commit
+.pre-commit-config.yaml.backup

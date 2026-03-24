@@ -1,8 +1,8 @@
 # Create VPC
 resource "aws_vpc" "main" {
-  cidr_block = var.vpc_cidr
+  cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 }
 
 # Create public subnets
@@ -78,8 +78,8 @@ resource "aws_route_table_association" "private" {
 
 # DynamoDB Gateway Endpoint (free)
 resource "aws_vpc_endpoint" "dynamodb" {
-  vpc_id       = aws_vpc.main.id
-  service_name = "com.amazonaws.eu-west-2.dynamodb"
+  vpc_id          = aws_vpc.main.id
+  service_name    = "com.amazonaws.eu-west-2.dynamodb"
   route_table_ids = aws_route_table.private.*.id
 
 }

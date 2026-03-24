@@ -8,7 +8,7 @@ resource "aws_ecs_cluster" "foo" {
 }
 
 resource "aws_ecs_task_definition" "service" {
-  family = "service"
+  family                = "service"
   container_definitions = jsonencode(var.container_definitions)
 
   volume {
