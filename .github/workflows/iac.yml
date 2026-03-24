@@ -50,14 +50,14 @@ jobs:
           framework: terraform
 
       - name: Upload tfsec Results
-        if: always() && hashFiles('tfsec-results.sarif') != ''
+        if: always() 
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: tfsec-results.sarif
           category: infrastructure-security-tfsec
 
       - name: Upload Security Results
-        if: always() && hashFiles('checkov-results.sarif') != ''
+        if: always() 
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: checkov-results.sarif
