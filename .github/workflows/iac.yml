@@ -39,10 +39,12 @@ jobs:
           fi
 
       - name: Run tfsec (Infrastructure Security)
+        if: always() 
         uses: aquasecurity/tfsec-action@v1.0.3
 
       - name: Run Checkov (Policy Compliance)
         uses: bridgecrewio/checkov-action@v12
+        if: always() 
         with:
           directory: ${{ env.scan_dir }}
           framework: terraform
