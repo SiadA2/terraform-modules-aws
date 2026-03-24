@@ -1,11 +1,11 @@
-name: Security Scan (Reusable)
+name: IaC Security Scanning
 
 on:
     pull_request:
         branches:
-            - main
+            - dev
         paths:
-            - '**.tf'
+            - '*.tf'
 
 permissions:
   contents: read
@@ -15,10 +15,11 @@ jobs:
 
   infrastructure-security:
     name: Infrastructure Security
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Get changed directories
         id: changed-dirs
@@ -39,19 +40,12 @@ jobs:
 
       - name: Run tfsec (Infrastructure Security)
         uses: aquasecurity/tfsec-action@v1.0.3
-        with:
-          directory: ${{ env.scan_dir }}
-          output_format: sarif
-          output_file_path: tfsec-results.sarif
 
       - name: Run Checkov (Policy Compliance)
         uses: bridgecrewio/checkov-action@v12
         with:
           directory: ${{ env.scan_dir }}
           framework: terraform
-          soft_fail: true
-          output_format: sarif
-          output_file_path: checkov-results.sarif
 
       - name: Upload tfsec Results
         if: always() && hashFiles('tfsec-results.sarif') != ''
@@ -65,4 +59,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: checkov-results.sarif
-          category: infrastructure-security
+          category: infrastructure-security-checkov
