@@ -21,23 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get changed directories
-        id: changed-dirs
-        uses: tj-actions/changed-files@v41
-        with:
-          dir_names: true
-          dir_names_max_depth: 1
-
-      - name: Set scan directory
-        run: |
-          dirs="${{ steps.changed-dirs.outputs.all_changed_dirs }}"
-          count=$(echo "$dirs" | wc -w)
-          if [ "$count" -eq 1 ]; then
-            echo "scan_dir=$dirs" >> $GITHUB_ENV
-          else
-            echo "scan_dir=." >> $GITHUB_ENV
-          fi
-
       - name: Run tfsec (Infrastructure Security)
         if: always() 
         uses: aquasecurity/tfsec-action@v1.0.3
@@ -46,7 +29,6 @@ jobs:
         uses: bridgecrewio/checkov-action@v12
         if: always() 
         with:
-          directory: ${{ env.scan_dir }}
           framework: terraform
 
       - name: Upload tfsec Results
