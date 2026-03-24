@@ -1,0 +1,68 @@
+name: Security Scan (Reusable)
+
+on:
+    pull_request:
+        branches:
+            - main
+        paths:
+            - '**.tf'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+
+  infrastructure-security:
+    name: Infrastructure Security
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get changed directories
+        id: changed-dirs
+        uses: tj-actions/changed-files@v41
+        with:
+          dir_names: true
+          dir_names_max_depth: 1
+
+      - name: Set scan directory
+        run: |
+          dirs="${{ steps.changed-dirs.outputs.all_changed_dirs }}"
+          count=$(echo "$dirs" | wc -w)
+          if [ "$count" -eq 1 ]; then
+            echo "scan_dir=$dirs" >> $GITHUB_ENV
+          else
+            echo "scan_dir=." >> $GITHUB_ENV
+          fi
+
+      - name: Run tfsec (Infrastructure Security)
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          directory: ${{ env.scan_dir }}
+          output_format: sarif
+          output_file_path: tfsec-results.sarif
+
+      - name: Run Checkov (Policy Compliance)
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: ${{ env.scan_dir }}
+          framework: terraform
+          soft_fail: true
+          output_format: sarif
+          output_file_path: checkov-results.sarif
+
+      - name: Upload tfsec Results
+        if: always() && hashFiles('tfsec-results.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: tfsec-results.sarif
+          category: infrastructure-security-tfsec
+
+      - name: Upload Security Results
+        if: always() && hashFiles('checkov-results.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: checkov-results.sarif
+          category: infrastructure-security
