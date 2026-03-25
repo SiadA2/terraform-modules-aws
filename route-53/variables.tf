@@ -3,11 +3,6 @@ variable "domain_name" {
   description = "The domain name for the Route 53 hosted zone"
 }
 
-variable "domain_name" {
-  type        = string
-  description = "Domain name of the Route 53 hosted zone"
-}
-
 variable "validation_method" {
   type        = string
   description = "How the ACM validates your domain"
