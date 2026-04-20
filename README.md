@@ -78,6 +78,47 @@ module "ecr" {
 }
 ```
 
+### EKS
+
+Creates an Amazon EKS cluster with a managed node group.
+
+```hcl
+module "eks" {
+  source = "./eks"
+
+  cluster_name                    = "my-cluster"
+  kubernetes_version              = "1.33"
+  vpc_id                          = module.vpc.vpc_id
+  subnet_ids                      = module.vpc.private_subnet_ids
+  control_plane_subnet_ids        = module.vpc.private_subnet_ids
+  instance_types                  = ["t3.medium"]
+  min_size                        = 1
+  max_size                        = 3
+  desired_size                    = 2
+  load_balancer_security_group_id = module.vpc.load_balancer_security_group_id
+}
+```
+
+### IAM
+
+Creates a reusable IAM role and optional instance profile.
+
+### Redis
+
+Creates an ElastiCache Serverless Redis deployment.
+
+### Secrets
+
+Creates an AWS Secrets Manager secret, version, and optional rotation.
+
+### EC2
+
+Creates a single EC2 instance.
+
+### SQS
+
+Placeholder for an SQS module.
+
 ### ECS Fargate
 
 Creates an ECS cluster with Fargate tasks.
