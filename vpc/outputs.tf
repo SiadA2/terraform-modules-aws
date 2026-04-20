@@ -15,7 +15,7 @@ output "private_subnet_ids" {
 
 output "availability_zones" {
   description = "List of availability zones used"
-  value       = var.availability_zones
+  value       = local.resolved_azs
 }
 
 output "public_route_table_id" {
@@ -31,4 +31,9 @@ output "private_route_table_id" {
 output "internet_gateway_id" {
   description = "ID of the Internet Gateway"
   value       = aws_internet_gateway.gw.id
+}
+
+output "load_balancer_security_group_id" {
+  description = "Security group ID for internet-facing load balancers"
+  value       = try(aws_security_group.load_balancer[0].id, null)
 }
