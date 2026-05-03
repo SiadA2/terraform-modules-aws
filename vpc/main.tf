@@ -14,6 +14,18 @@ resource "aws_vpc" "main" {
   })
 }
 
+resource "aws_security_group" "vpc_endpoint" {
+  name   = "vpc-endpoint-sg"
+  vpc_id = aws_vpc.main.id
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.ecs_tasks.id]
+    description     = "HTTPS from ECS tasks"
+  }
+}
+
 resource "aws_subnet" "public" {
   count = length(local.resolved_azs)
 
