@@ -50,3 +50,19 @@ variable "container_definitions" {
     }
   ]
 }
+
+variable "ecs_security_group_desc" {
+  type    = string
+  default = "allow inbound access from the ALB only"
+}
+
+variable "ecs_security_group_name" {
+  type    = string
+  default = "cb-ecs-tasks-security-group"
+}
+
+variable "app_port" {
+}
+
+variable "vpc_id" {
+}
