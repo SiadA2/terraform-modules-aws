@@ -165,7 +165,7 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_vpc_endpoint" "dynamodb" {
-  count = var.endpoint_security_grp_id != null ? 1 : 0
+  count = var.enable_vpc_endpoints ? 1 : 0
 
   vpc_id          = aws_vpc.main.id
   service_name    = "com.amazonaws.${var.aws_region}.dynamodb"
@@ -174,7 +174,7 @@ resource "aws_vpc_endpoint" "dynamodb" {
 }
 
 resource "aws_vpc_endpoint" "s3" {
-  count = var.endpoint_security_grp_id != null ? 1 : 0
+  count = var.enable_vpc_endpoints ? 1 : 0
 
   vpc_id          = aws_vpc.main.id
   service_name    = "com.amazonaws.${var.aws_region}.s3"
@@ -182,7 +182,7 @@ resource "aws_vpc_endpoint" "s3" {
 }
 
 resource "aws_vpc_endpoint" "sts" {
-  count = var.endpoint_security_grp_id != null ? 1 : 0
+  count = var.enable_vpc_endpoints ? 1 : 0
 
   vpc_id              = aws_vpc.main.id
   service_name        = "com.amazonaws.${var.aws_region}.sts"
@@ -193,7 +193,7 @@ resource "aws_vpc_endpoint" "sts" {
 }
 
 resource "aws_vpc_endpoint" "ecr_api" {
-  count = var.endpoint_security_grp_id != null ? 1 : 0
+  count = var.enable_vpc_endpoints ? 1 : 0
 
   vpc_id              = aws_vpc.main.id
   service_name        = "com.amazonaws.${var.aws_region}.ecr.api"
@@ -204,7 +204,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
 }
 
 resource "aws_vpc_endpoint" "ecr_dkr" {
-  count = var.endpoint_security_grp_id != null ? 1 : 0
+  count = var.enable_vpc_endpoints ? 1 : 0
 
   vpc_id              = aws_vpc.main.id
   service_name        = "com.amazonaws.${var.aws_region}.ecr.dkr"
@@ -215,7 +215,7 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
 }
 
 resource "aws_vpc_endpoint" "logs" {
-  count = var.endpoint_security_grp_id != null ? 1 : 0
+  count = var.enable_vpc_endpoints ? 1 : 0
 
   vpc_id              = aws_vpc.main.id
   service_name        = "com.amazonaws.${var.aws_region}.logs"

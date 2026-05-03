@@ -37,6 +37,12 @@ variable "endpoint_security_grp_id" {
   default     = null
 }
 
+variable "enable_vpc_endpoints" {
+  type        = bool
+  description = "Whether to create VPC endpoints for AWS services"
+  default     = false
+}
+
 variable "enable_nat_gateway" {
   type        = bool
   description = "Whether to create a single NAT gateway for private subnet egress"
