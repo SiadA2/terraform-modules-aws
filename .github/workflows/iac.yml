@@ -1,12 +1,11 @@
 name: IaC Security Scanning
 
 on:
-    pull_request:
-        branches:
-            - dev
-            - main
-        paths:
-            - '*/*.tf'
+  push:
+    branches:
+      - main
+    paths:
+      - '*/*.tf'
 
 permissions:
   contents: read
